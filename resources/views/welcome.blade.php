@@ -7,44 +7,36 @@
         <link rel="stylesheet" href="{{ URL::asset('/assets/css/life.css') }}">
     </head>
     <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                    {{--<br />--}}
-                    {{--<ul class="list-group">--}}
-                        {{--<li class="list-group-item">--}}
-                            {{--<span class="badge golGenerationDisplay">0</span>--}}
-                            {{--Generation--}}
-                        {{--</li>--}}
-                        {{--<li class="list-group-item">--}}
-                            {{--<span class="badge golWidthDislplay">0</span>--}}
-                            {{--Width--}}
-                        {{--</li>--}}
-                        {{--<li class="list-group-item">--}}
-                            {{--<span class="badge golHeightDisplay">0</span>--}}
-                            {{--Height--}}
-                        {{--</li>--}}
-                    {{--</ul>--}}
+        <div class="container" style="width:100%;">
+            <div class="row-fluid">
+                <div class="col-lg-2">
+                    <h4>Do Stuff</h4>
+                    <a class="btn btn-success btn-block golGenesis" href="#" role="button"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
+                    <a class="btn btn-danger btn-block disabled golApocalypse" href="#" role="button"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></a>
+                    <a class="btn btn-info btn-block golReload" href="" role="button"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
+                    <h4>Show Stuff</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            Generation:
+                            <span class="label label-success golGenerationDisplay pull-right"></span>
+                        </li>
+                        <li class="list-group-item">
+                            Living Cells:
+                            <span class="label label-success golLivingCellsDisplay pull-right"></span>
+                        </li>
+                        <li class="list-group-item">
+                            Width:
+                            <span class="label label-success golWidthDislplay pull-right"></span>
+                        </li>
+                        <li class="list-group-item">
+                            Height:
+                            <span class="label label-success golHeightDisplay pull-right"></span>
+                        </li>
+                    </ul>
+                    <h4>Show Other Stuff</h4>
+                    <div class="alert golAlert" role="alert" style="display:none;"></div>
                 </div>
-                <div class="col-lg-4">
-                    {{--<br />--}}
-                    {{--<a class="btn btn-success golGenesis" href="#" role="button">Genesis</a>--}}
-                    {{--<a class="btn btn-danger disabled golApocalypse" href="#" role="button">Apocalypse</a>--}}
-                    {{--<a class="btn btn-info disabled golReload" href="" role="button">Reload</a>--}}
-                </div>
-                <div class="col-lg-4">
-                    Empty1
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-1">
-                    <div class="btn-group-vertical" role="group" aria-label="...">
-                        <a class="btn btn-success golGenesis" href="#" role="button">Genesis</a>
-                        <a class="btn btn-danger disabled golApocalypse" href="#" role="button">Apocalypse</a>
-                        <a class="btn btn-info disabled golReload" href="" role="button">Reload</a>
-                    </div>
-                </div>
-                <div class="col-lg-11">
+                <div class="col-lg-10">
                     {{--<div class="cell-row">--}}
                     {{--<div class="cell"></div>--}}
                     {{--<div class="cell"></div>--}}
@@ -55,7 +47,6 @@
                     {{--<div class="cell"></div>--}}
                     {{--</div>--}}
                     <div class="gol" data-generation="0" data-width="100" data-height="100" data-active="1">
-
                     </div>
                 </div>
             </div>

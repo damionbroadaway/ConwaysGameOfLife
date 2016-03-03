@@ -9,9 +9,10 @@ jQuery(document).ready(function ($){
     var $reload               = $('a.golReload');
     var $golContainer         = $('div.gol');
     var $golGenerationDisplay = $('span.golGenerationDisplay');
+    var $golLivingCellsDisplay= $('span.golLivingCellsDisplay');
     var $golWidthDisplay      = $('span.golWidthDislplay');
     var $golHeightDisplay     = $('span.golHeightDisplay');
-    var $golAllCells          = $('div.cell');
+    var $golAlert             = $('div.golAlert');
 
     // API
     var apiURL        = 'http://your.mom/api/v1/getLife';
@@ -22,21 +23,30 @@ jQuery(document).ready(function ($){
     var golHeight;
     var golActive;
 
+    //  Button Controls
     $genesis.on('click', function() {
         $apocalypse.removeClass('disabled');
         $genesis.addClass('disabled');
+        updateAlert('success', 'Life has begun.');
+        $golContainer.data('active', 1);
         getLife();
     });
 
     $apocalypse.on('click', function () {
         $golContainer.data('active', 0);
-        $reload.removeClass('disabled');
+        $genesis.removeClass('disabled');
     });
 
     $reload.on('click', function () {
         window.location.reload(true);
     });
 
+    //  Render Grid
+    renderGrid($golContainer.data('width'), $golContainer.data('height'));
+
+    /**
+     *
+     */
     function getLife() {
         //  Prevents multiple calls
         if ($.active > 1) {
@@ -45,6 +55,7 @@ jQuery(document).ready(function ($){
 
         golActive = $golContainer.data('active');
         if (golActive == 0) {
+            updateAlert('info', 'Life has been paused');
             return;
         }
 
@@ -78,7 +89,6 @@ jQuery(document).ready(function ($){
                 $golContainer.data('generation', response.data.generation);
 
                 if (response.data.generation == 1) {
-                    renderGrid(response.data.width, response.data.height);
                     renderLife(response.data.life.life);
 
                 } else {
@@ -96,6 +106,10 @@ jQuery(document).ready(function ($){
                });
     }
 
+    /**
+     *
+     * @returns {Array}
+     */
     function getCurrentGeneration() {
         var $liveCells          = $('div.life');
         var liveCellCoordinates = [];
@@ -112,17 +126,26 @@ jQuery(document).ready(function ($){
         return liveCellCoordinates;
     }
 
+    /**
+     *
+     * @param lifeData
+     */
     function renderLife(lifeData) {
-        if (lifeData.length == 0) {
+        if (lifeData == null || lifeData.length == 0) {
             console.log('EVERYBODY DIED!');
+            updateAlert('danger', 'Evolution has failed.');
+            $golContainer.data('active', 0);
             return;
         }
+
+        //  Tell user how much life they have created.
+        //  TODO: Prevent God complexes
+
+        $golLivingCellsDisplay.text(lifeData.length);
 
         $(lifeData).each (function (index, value) {
             if (value.data == 1) {
                 var $lifeCell = $('div.cell[data-row="' + value.row + '"][data-col="' + value.column + '"]');
-
-                //$lifeCell.css('background-color', '#'+Math.floor(Math.random()*16777215).toString(16));
 
                 $lifeCell.addClass('life');
                 $lifeCell.data('life', 1);
@@ -132,6 +155,11 @@ jQuery(document).ready(function ($){
         $color.css('background-color', '#'+Math.floor(Math.random()*16777215).toString(16));
     }
 
+    /**
+     *
+     * @param width
+     * @param height
+     */
     function renderGrid(width, height) {
         $golContainer.empty();
 
@@ -153,11 +181,26 @@ jQuery(document).ready(function ($){
         }
     }
 
+    /**
+     *
+     */
     function resetGrid() {
         var $liveCells = $golContainer.find('div.life');
         $liveCells.each(function (index, value) {
             $(this).removeClass('life');
             $(this).css('background-color', '#ccc');
         });
+    }
+
+    /**
+     *
+     * @param status
+     * @param message
+     */
+    function updateAlert(status, message) {
+        $golAlert.addClass('alert-' + status);
+        $golAlert.text(message);
+        $golAlert.toggle();
+        $golAlert.fadeOut(5000);
     }
 });
