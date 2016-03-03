@@ -22,3 +22,7 @@
     width: auto;
     margin: 0 auto;
 }
+
+.golAlertWrapper {
+    height: 60px;
+}

@@ -34,7 +34,35 @@
                         </li>
                     </ul>
                     <h4>Show Other Stuff</h4>
-                    <div class="alert golAlert" role="alert" style="display:none;"></div>
+                    <div class="golAlertWrapper">
+                        <div class="alert golAlert" role="alert" style="display:none;"></div>
+                    </div>
+                    <h4>Show Dev Stuff</h4>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Submitted by</h3>
+                        </div>
+                        <div class="panel-body">
+                            Damion M Broadaway
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Repo</h3>
+                        </div>
+                        <div class="panel-body">
+                            <a href="https://github.com/damionbroadaway/ConwaysGameOfLife" target="_blank">GitHub</a>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Demo</h3>
+                        </div>
+                        <div class="panel-body">
+                            Add <code>10.22.1.128   your.mom</code> to your computer's host file.
+                        </div>
+                    </div>
+
                 </div>
                 <div class="col-lg-10">
                     {{--<div class="cell-row">--}}
