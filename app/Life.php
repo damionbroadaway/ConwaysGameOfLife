@@ -20,7 +20,7 @@ class Life
      * Seed is based on a square.
      * This value is the sides.
      */
-    const SEED_SIZE = 5;
+    const SEED_SIZE = 9;
 
     /**
      * @var int
@@ -161,9 +161,28 @@ class Life
         //  Take current generation and put them on the grid.
         $grid = $this->sortCurrentGenerationData($lifeData);
 
+        /**
+         *      Performance Gainz:
+         *          Part I
+         *          @see Part II @ ~ line 177 in this method
+         */
+        $rowMin = $lifeData[0]['row'] - 1;
+        $rowMax = $lifeData[(count($lifeData) - 1)]['row'] + 1;
+
         //  Starting as 0,0 we check every cell for life.
         //  We also count their neighbors since that's how one evolves.
         foreach ($grid as $row => $cell) {
+
+            //  Performance Gainz:
+            //      Part II
+            //      By setting an upper and lower boundry on
+            //      what to check performance was increased
+            //      from ~200-300ms to ~50ms
+            if ($row < $rowMin) {
+                continue;
+            } elseif ($row > $rowMax) {
+                break;
+            }
             foreach ($cell as $column => $life) {
                 //  What is around this data point on the grid?!
                 $neighborCount = $this->countNeighbors($row, $column);
@@ -242,6 +261,8 @@ class Life
         $this->setGrid($theGrid);
         return $theGrid;
     }
+
+
 
     /**
      * For any given data point we must look at every cell adjacent.

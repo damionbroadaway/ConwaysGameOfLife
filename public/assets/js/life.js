@@ -69,6 +69,9 @@ jQuery(document).ready(function ($){
             $liveCells = getCurrentGeneration();
         }
 
+        //  Timing
+        var evolveStart = new Date().getTime();
+
         $.ajax({
             url: apiURL,
             type: 'post',
@@ -92,6 +95,9 @@ jQuery(document).ready(function ($){
                     renderLife(response.data.life.life);
 
                 } else {
+                    var evolveEnd = new Date().getTime();
+                    console.log('TIME TO PROCESS ↓');
+                    console.log('_             > ' + (evolveEnd - evolveStart));
                     resetGrid();
                     renderLife(response.data.life);
                 }
@@ -123,6 +129,8 @@ jQuery(document).ready(function ($){
             );
         });
 
+        $golContainer.data('prev-generation', liveCellCoordinates);
+
         return liveCellCoordinates;
     }
 
@@ -138,21 +146,38 @@ jQuery(document).ready(function ($){
             return;
         }
 
+        var start = new Date().getTime();
+
         //  Tell user how much life they have created.
         //  TODO: Prevent God complexes
 
         $golLivingCellsDisplay.text(lifeData.length);
 
         $(lifeData).each (function (index, value) {
-            if (value.data == 1) {
-                var $lifeCell = $('div.cell[data-row="' + value.row + '"][data-col="' + value.column + '"]');
-
-                $lifeCell.addClass('life');
-                $lifeCell.data('life', 1);
+            if (value.data === 0) {
+                return true;
             }
+
+            //  Performance Gainz:
+            //      By giving the elements IDs
+            //      rather than searching for data attributes
+            //      increased performance from
+            //      browser crashing to < 20ms
+            //
+            //      var $lifeCell = $('div.cell[data-row="' + value.row + '"][data-col="' + value.column + '"]');
+
+            var $lifeCell = $('div#' + pad(value.row) + pad(value.column));
+
+            $lifeCell.addClass('life');
+            $lifeCell.data('life', 1);
         });
+
         var $color = $('.life');
         $color.css('background-color', '#'+Math.floor(Math.random()*16777215).toString(16));
+
+        var end = new Date().getTime();
+        console.log('TIME TO RENDER ↓');
+        console.log('_             > ' + (end - start));
     }
 
     /**
@@ -166,6 +191,7 @@ jQuery(document).ready(function ($){
         var r = 0;
         //  < insteasd of <= to account for zero indexing
         while (r < height) {
+
             // r = row = height
             var $row = $('<div class="cell-row"></div>');
 
@@ -173,12 +199,16 @@ jQuery(document).ready(function ($){
             var c = 0;
             //  < insteasd of <= to account for zero indexing
             while (c < width) {
-                $row.append('<div class="cell" data-row="' + r + '" data-col="' + c + '" data-life="0"></div>');
+                $row.append('<div id="' + pad(r) + pad(c) + '" class="cell" data-row="' + r + '" data-col="' + c + '" data-life="0"></div>');
                 c++;
             }
             $golContainer.append($row);
             r++;
         }
+    }
+
+    function pad(n) {
+        return (n < 10) ? ("0" + n) : n;
     }
 
     /**
