@@ -286,7 +286,9 @@ class Life
     public function countNeighbors($row, $col)
     {
         //  Assume single.
+        //      Wanna talk about my cats?
         $hasNeighborCount = 0;
+
         //  Dataset of the change required to get to adjacent cells.
         $compass = [
             [               // NW
