@@ -20,7 +20,7 @@ class Life
      * Seed is based on a square.
      * This value is the sides.
      */
-    const SEED_SIZE = 9;
+    const SEED_SIZE = 11;
 
     /**
      * @var int

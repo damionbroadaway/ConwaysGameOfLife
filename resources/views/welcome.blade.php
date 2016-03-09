@@ -12,7 +12,7 @@
                 <div class="col-lg-2">
                     <h4>Do Stuff</h4>
                     <a class="btn btn-success btn-block golGenesis" href="#" role="button"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
-                    <a class="btn btn-danger btn-block disabled golApocalypse" href="#" role="button"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></a>
+                    <a class="btn btn-danger btn-block disabled golApocalypse" href="#" role="button"><span class="glyphicon glyphicon-stop" aria-hidden="true"></span></a>
                     <a class="btn btn-info btn-block golReload" href="" role="button"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
                     <h4>Show Stuff</h4>
                     <ul class="list-group">
